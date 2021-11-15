@@ -6,34 +6,34 @@ namespace FallingStars
 {
 	public class FallingStarsGame : Game
 	{
-		private GraphicsDeviceManager graphics;
-		private SpriteBatch spriteBatch;
-		private Piece piece;
+		private readonly GraphicsDeviceManager _graphics;
+		private SpriteBatch _spriteBatch;
+		private Piece _piece;
 
-		double tickTime = 1.0;
-		double lastUpdated = 0;
+        private const double TickTime = 1.0;
+        private double _lastUpdated = 0.0;
 
 		public FallingStarsGame()
 		{
-			graphics = new GraphicsDeviceManager(this);
+			_graphics = new GraphicsDeviceManager(this);
 			Content.RootDirectory = "Content";
 			IsMouseVisible = true;
 		}
 
 		protected override void Initialize()
 		{
-			graphics.PreferredBackBufferWidth = Common.BoardWidth * Common.BlockSize;
-			graphics.PreferredBackBufferHeight = Common.BoardHeight * Common.BlockSize;
-			graphics.ApplyChanges();
+			_graphics.PreferredBackBufferWidth = Common.BoardWidth * Common.BlockSize;
+			_graphics.PreferredBackBufferHeight = Common.BoardHeight * Common.BlockSize;
+			_graphics.ApplyChanges();
 
-			piece = new Piece(Piece.Shape.J, 5);
+			_piece = new Piece(Piece.Shape.J, 5);
 
 			base.Initialize();
 		}
 
 		protected override void LoadContent()
 		{
-			spriteBatch = new SpriteBatch(GraphicsDevice);
+			_spriteBatch = new SpriteBatch(GraphicsDevice);
 
 			Piece.LoadContent(Content);
 		}
@@ -45,10 +45,10 @@ namespace FallingStars
 				Exit();
 			}
 
-			if (gameTime.TotalGameTime.TotalSeconds >= lastUpdated + tickTime)
+			if (gameTime.TotalGameTime.TotalSeconds >= _lastUpdated + TickTime)
 			{
-				lastUpdated += tickTime;
-				piece.Update();
+				_lastUpdated += TickTime;
+				_piece.Update();
 			}
 
 			base.Update(gameTime);
@@ -58,7 +58,7 @@ namespace FallingStars
 		{
 			GraphicsDevice.Clear(Color.CornflowerBlue);
 
-			piece.Draw(spriteBatch);
+			_piece.Draw(_spriteBatch);
 
 			base.Draw(gameTime);
 		}
