@@ -7,8 +7,8 @@ namespace FallingStars
 {
 	public class Piece
 	{
-		private static Texture2D spriteSheet;
-		private static readonly Dictionary<Shape, Rectangle> sourceRectMapping = new Dictionary<Shape, Rectangle>
+		private static Texture2D s_spriteSheet;
+		private static readonly Dictionary<Shape, Rectangle> s_sourceRectMapping = new Dictionary<Shape, Rectangle>
 		{
 			{ Shape.J ,new Rectangle(0  * Common.BlockSize, 0 * Common.BlockSize, 3 * Common.BlockSize, 2 * Common.BlockSize) },
 			{ Shape.L ,new Rectangle(3  * Common.BlockSize, 0 * Common.BlockSize, 3 * Common.BlockSize, 2 * Common.BlockSize) },
@@ -19,19 +19,19 @@ namespace FallingStars
 			{ Shape.I ,new Rectangle(17 * Common.BlockSize, 0 * Common.BlockSize, 4 * Common.BlockSize, 1 * Common.BlockSize) },
 		};
 
-		private readonly Rectangle sourceRect;
+		private readonly Rectangle _sourceRect;
 
 		public static void LoadContent(ContentManager content)
 		{
-			spriteSheet = content.Load<Texture2D>("tetris");
+			s_spriteSheet = content.Load<Texture2D>("tetris");
 		}
 
 		public Piece(Shape type, int position)
 		{
 			Type = type;
-			sourceRect = sourceRectMapping[type];
-			Width = sourceRect.Width / 30;
-			Height = sourceRect.Height / 30;
+			_sourceRect = s_sourceRectMapping[type];
+			Width = _sourceRect.Width / 30;
+			Height = _sourceRect.Height / 30;
 			Position = new Vector2(position, 0);
 		}
 
@@ -44,7 +44,7 @@ namespace FallingStars
 		public void Draw(SpriteBatch spriteBatch)
 		{
 			spriteBatch.Begin();
-			spriteBatch.Draw(spriteSheet, Position * 30, sourceRect, Color.White);
+			spriteBatch.Draw(s_spriteSheet, Position * 30, _sourceRect, Color.White);
 			spriteBatch.End();
 		}
 
